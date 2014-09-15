@@ -1,0 +1,26 @@
+---
+- name: create iptables
+  template: src=iptables.j2 dest=/etc/sysconfig/iptables
+
+- name: change SSH port
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^#Port " line="Port {{ ssh_port }}" state=present
+
+- name: create user
+  user: name={{ user_name }}
+        password={{ user_password }}
+        groups=wheel
+
+- name: allow wheel users to sudo
+  # NOTE: Because of the ': ' on the line, fully quote or use {{':'}}.
+  lineinfile: dest=/etc/sudoers
+              regexp="^#\s*(%wheel\s+ALL=\(ALL\)\s+NOPASSWD{{':'}}\s+ALL)"
+              line="\1"
+              backrefs=yes
+              state=present
+
+# NOTE: Combine two tasks to keep ansible access with port 22
+- name: restart iptables
+  service: name=sshd state=restarted
+
+- name: restart iptables
+  service: name=iptables state=restarted

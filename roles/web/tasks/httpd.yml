@@ -1,0 +1,14 @@
+# Install httpd and Configure
+---
+
+- name: install httpd
+  yum: name=httpd state=present
+  notify: restart httpd
+
+- name: insert iptables rule for httpd
+  lineinfile: dest=/etc/sysconfig/iptables
+              create=yes
+              state=present
+              insertafter="^:OUTPUT "
+              line="-A INPUT -p tcp  --dport 80 -j  ACCEPT"
+  notify: restart iptables

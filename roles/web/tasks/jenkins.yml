@@ -1,0 +1,25 @@
+# Install Jenkins and Configure
+---
+- name: get jenkins repo
+  get_url: url="http://pkg.jenkins-ci.org/redhat/jenkins.repo" dest=/etc/yum.repos.d/jenkins.repo
+
+- name: set jenkins repo
+  command: rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+
+- name: install dependencies JavaSDK
+  yum: name=java-1.7.0-openjdk state=latest
+
+- name: install jenkins
+  yum: name=jenkins state=latest
+  notify: restart jenkins
+
+- name: change jenkins port
+  lineinfile: dest=/etc/sysconfig/jenkins regexp="^JENKINS_PORT=" line=JENKINS_PORT="8008"
+
+- name: insert iptables rule for jenkins
+  lineinfile: dest=/etc/sysconfig/iptables
+              create=yes
+              state=present
+              insertafter="^:OUTPUT "
+              line="-A INPUT -p tcp  --dport 8008 -j  ACCEPT"
+  notify: restart iptables
