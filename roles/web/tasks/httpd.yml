@@ -1,6 +1,5 @@
 # Install httpd and Configure
 ---
-
 - name: install httpd
   yum: name=httpd state=present
   notify: restart httpd
