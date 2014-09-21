@@ -1,6 +1,3 @@
-#- include: httpd.yml
-#- include: jenkins.yml
-#- include: ruby.yml
-#- include: passenger.yml
-- include: redmine.yml
-#- include: test.yml
+- include: httpd.yml
+- include: ruby.yml
+- include: passenger.yml

@@ -24,7 +24,7 @@
 
 - name: install redmine database.yml
   sudo: no
-  template: src=database.yml dest=/var/www/redmine/config/database.yml
+  template: src=database.j2 dest=/var/www/redmine/config/database.yml
 
 - name: install bundler
   command: gem install bundler creates=/usr/bin/bundle

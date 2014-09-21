@@ -10,8 +10,14 @@
 #  roles:
 #    - common
 
-- name: configure and deploy the webservers and application code
+- name: make webserver
   sudo: yes
   hosts: sakura-vps
   roles:
     - web
+
+- name: deploy apps
+  sudo: yes
+  hosts: sakura-vps
+  roles:
+    - app
