@@ -1,0 +1,46 @@
+# install redmine
+---
+- name: install epel repo
+  yum: name=epel-release state=present
+
+- name: required packages
+  yum: name={{ item }} state=present
+  with_items:
+    - libxml2-devel
+    - ImageMagick
+    - ImageMagick-devel
+
+- name: clone redmine repo
+  git: repo=https://github.com/redmine/redmine.git dest=/var/www/redmine version=2.5-stable
+
+- name: install redmine database.yml
+  template: src=database.yml dest=/var/www/redmine/config/database.yml
+
+- name: install bundler
+  command: gem install bundler creates=/usr/bin/bundle
+
+- name: install redmine dependence
+  command: bundle install --without development test postgresql mysql mysql2 chdir=/var/www/redmine
+
+- name: install redmine httpd conf
+  template: src=redmine.conf dest=/etc/httpd/conf.d/redmine.conf
+
+- name: generate secret token
+  command: rake generate_secret_token chdir=/var/www/redmine
+
+- name: initialise db for redmine
+  command: rake db:migrate RAILS_ENV=production chdir=/var/www/redmine
+
+#- name: create some temp/cache directories | ideally some of the redmine setups should be setup as apache user
+#  file: path=$item state=directory
+#  with_items:
+#    - /var/www/redmine/tmp/cache
+
+- name: chown the redmine directory
+  file: path=/var/www/redmine state=directory owner=apache group=apache recurse=yes
+
+# when the first install do following
+- name: load default data into redmine
+  command: rake redmine:load_default_data RAILS_ENV=production REDMINE_LANG=ja chdir=/var/www/redmine
+  notify:
+    - restart httpd

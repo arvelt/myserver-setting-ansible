@@ -1,21 +1,17 @@
 #- name: common package and configure
 #  hosts: sakura-vps
-#  user: root
 #  vars_files:
 #    - vars/password.yml
 #  roles:
 #    - sakura-root
 
-- name: common package and configure
-  hosts: sakura-vps
-  sudo: yes
-
-  roles:
-    - common
+#- name: common package and configure
+#  hosts: sakura-vps
+#  roles:
+#    - common
 
 - name: configure and deploy the webservers and application code
-  hosts: sakura-vps
   sudo: yes
-
+  hosts: sakura-vps
   roles:
     - web

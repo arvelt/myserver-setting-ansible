@@ -21,6 +21,9 @@
 - name: install passenger
   command: gem install passenger --no-rdoc --no-ri
 
+# - name: install passenger
+#   command: gem install passenger --no-rdoc --no-ri executable=/usr/local/bin/gem
+
 - name: find passenger root
   command: passenger-config --root
   register: passenger_root

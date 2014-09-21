@@ -1,16 +1,5 @@
 # This playbook contains common plays that will be run on all nodes.
 ---
 
-- name: install developer tool
-  yum: name={{ item }} state=present
-  with_items:
-    - gcc-c++
-    - zlib-devel
-    - curl-devel
-    - openssl-devel
-    - httpd-devel
-    - apr-devel
-    - apr-util-devel
-    - sqlite
-    - sqlite-devel
-    - git
+- name: Install git
+  yum: name=git state=present

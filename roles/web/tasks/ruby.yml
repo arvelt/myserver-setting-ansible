@@ -13,7 +13,7 @@
   get_url: url="http://cache.ruby-lang.org/pub/ruby/2.0/{{ version }}.tar.gz" dest="./{{ version }}.tar.gz"
 
 - name: exract ruby
-  command: 'tar -zxvf {{ version }}.tar.gz'
+  command: 'tar zxvf {{ version }}.tar.gz'
 
 - name: install ruby
   shell: 'cd {{ version }};{{ item }}'
