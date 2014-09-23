@@ -18,6 +18,9 @@
   git: repo=https://github.com/redmine/redmine.git dest=/var/www/redmine version=2.5-stable
   register: redmine_root_dir
 
+- name: put recovery data from localhost
+  copy: src=~/Dropbox/backup/redmine/db/production.sqlite3 dest=/var/www/redmine/db/production.sqlite3 owner=apache group=apache mode=0644
+
 - name: who am I
   sudo: no
   command: whoami
@@ -48,9 +51,10 @@
   sudo: no
   command: rake generate_secret_token chdir=/var/www/redmine
 
-- name: initialise db for redmine
-  sudo: no
-  command: rake db:migrate RAILS_ENV=production chdir=/var/www/redmine
+# When version upgrade, do the following.
+#- name: initialise db for redmine
+#  sudo: no
+#  command: rake db:migrate RAILS_ENV=production chdir=/var/www/redmine
 
 #- name: create some temp/cache directories | ideally some of the redmine setups should be setup as apache user
 #  file: path=$item state=directory
@@ -60,9 +64,9 @@
 - name: chown the redmine directory
   file: path=/var/www/redmine state=directory owner=apache group=apache recurse=yes
 
-# when the first install do following
-- name: load default data into redmine
-  command: rake redmine:load_default_data RAILS_ENV=production REDMINE_LANG=ja chdir=/var/www/redmine
+# When the first install do the following
+# - name: load default data into redmine
+#   command: rake redmine:load_default_data RAILS_ENV=production REDMINE_LANG=ja chdir=/var/www/redmine
 
 - name: install redmiine.conf to httpd
   template: src=redmine.j2 dest=/etc/httpd/conf.d/redmine.conf
