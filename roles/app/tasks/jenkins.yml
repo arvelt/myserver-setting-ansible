@@ -6,7 +6,7 @@
 - name: set jenkins repo
   command: rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
 
-- name: install dependencies JavaSDK
+- name: install jenkins dependencies JavaSDK
   yum: name=java-1.7.0-openjdk state=latest
 
 - name: install jenkins

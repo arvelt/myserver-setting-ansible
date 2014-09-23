@@ -1,12 +1,16 @@
 # install redmine
 ---
-- name: install epel repo
+- name: install epel repo for redmine
   yum: name=epel-release state=present
 
-- name: required packages
+- name: required packages for redmine
   yum: name={{ item }} state=present
   with_items:
+    - ruby-devel
+    - libxml2
     - libxml2-devel
+    - libxslt
+    - libxslt-devel
     - ImageMagick
     - ImageMagick-devel
 
@@ -28,6 +32,13 @@
 
 - name: install bundler
   command: gem install bundler creates=/usr/bin/bundle
+
+#if nokogiri failed, enable following.
+- name: rebuild gem nokogiri
+  command: gem install nokogiri -- --use-system-libraries
+
+- name: resolve gem nokogiri dependence
+  command: bundle config build.nokogiri --use-system-libraries
 
 - name: install redmine dependence
   sudo: no
