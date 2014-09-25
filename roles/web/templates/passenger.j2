@@ -3,3 +3,6 @@ LoadModule passenger_module {{ passenger_root.stdout }}/buildout/apache2/mod_pas
   PassengerRoot {{ passenger_root.stdout }}
   PassengerDefaultRuby {{ ruby_dir.stdout }}
 </IfModule>
+
+SetEnv RAILS_ENV production
+SetEnv SINATRA_ENV production
