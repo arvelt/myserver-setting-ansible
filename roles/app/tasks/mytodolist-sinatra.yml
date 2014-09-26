@@ -1,6 +1,6 @@
 ---
 - name: clone mytodo-sinatra repo
-  git: repo=https://github.com/arvelt/my-todo-list-with-ruby-sinatra.git dest=/var/www/mytodolist-sinatra
+  git: repo=https://github.com/arvelt/my-todo-list-with-ruby-sinatra.git dest=/var/www/mytodolist-sinatra force=yes
   register: mytodolist_sinatra_root_dir
 
 - name: put recovery data from localhost
