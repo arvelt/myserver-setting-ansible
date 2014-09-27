@@ -1,0 +1,12 @@
+<VirtualHost *>
+    ServerName arvelt.net
+    WSGIDaemonProcess flaskupload user=apache group=apache threads=5
+    WSGIScriptAlias /fileupload /var/www/flaskupload/flaskupload.wsgi
+
+    <Directory /var/www/flaskupload>
+        WSGIProcessGroup flaskupload
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>

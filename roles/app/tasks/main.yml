@@ -1,3 +1,4 @@
 - include: jenkins.yml
 - include: redmine.yml
 - include: mytodolist-sinatra.yml
+- include: flaskupload.yml
