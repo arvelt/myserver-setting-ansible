@@ -1,0 +1,26 @@
+---
+- name: install php-devel
+  yum: name=php-devel
+
+- name: get phpt5.5
+  command: wget http://jp2.php.net/get/php-5.5.17.tar.bz2
+
+- name: extract phpt5.5
+  command: tar zxvf php-5.5.17.tar.gz
+
+- name: enable php-sqlite
+  shell: {{item}} chdir=php-5.5.17/ext/sqlite3
+  with_item:
+    - cp config0.m4 config.m4
+    - phpize
+    - ./configure
+    - make
+    - make install
+
+- name: Add pydio repo
+  yum: name=http://dl.ajaxplorer.info/repos/pydio-release-1-1.noarch.rpm
+
+- name: install pydio
+  command: yum --disablerepo=pydio-testing install pydio
+  notify:
+    - restart httpd

@@ -19,7 +19,7 @@
                validate='visudo -cf %s'"
 
 - name: install passenger
-  command: gem install passenger --no-rdoc --no-ri
+  command: sudo gem install passenger --no-rdoc --no-ri
 
 # - name: install passenger
 #   command: gem install passenger --no-rdoc --no-ri executable=/usr/local/bin/gem

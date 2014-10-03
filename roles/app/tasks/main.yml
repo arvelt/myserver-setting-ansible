@@ -2,3 +2,4 @@
 - include: redmine.yml
 - include: mytodolist-sinatra.yml
 - include: flaskupload.yml
+- include: owncloud.yml

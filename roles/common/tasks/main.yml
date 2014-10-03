@@ -1,5 +1,17 @@
 # This playbook contains common plays that will be run on all nodes.
 ---
+# repository
+- name: add repository 'epel-repo'
+  yum: name=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm state=present
 
-- name: Install git
+- name: add repository 'rpmforge-repo'
+  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm state=present
+
+- name: add repository 'remi-repo'
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm state=present
+
+- name: install git
   yum: name=git state=present
+
+- name: install wget
+  yum: name=wget state=present

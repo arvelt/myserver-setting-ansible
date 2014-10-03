@@ -13,10 +13,10 @@
   get_url: url="http://cache.ruby-lang.org/pub/ruby/2.0/{{ version }}.tar.gz" dest="./{{ version }}.tar.gz"
 
 - name: exract ruby
-  command: 'tar zxvf {{ version }}.tar.gz'
+  command: 'tar zxvf {{ version }}.tar.gz creates={{ version }}'
 
 - name: install ruby
-  shell: 'cd {{ version }};{{ item }}'
+  shell: 'cd {{ version }};{{ item }} creates=/usr/local/bin/ruby'
   with_items:
     - ./configure
     - make

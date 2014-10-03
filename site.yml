@@ -5,10 +5,11 @@
 #  roles:
 #    - sakura-root
 
-#- name: common package and configure
-#  hosts: sakura-vps
-#  roles:
-#    - common
+- name: common package and configure
+  sudo: yes
+  hosts: sakura-vps
+  roles:
+    - common
 
 - name: make webserver
   sudo: yes

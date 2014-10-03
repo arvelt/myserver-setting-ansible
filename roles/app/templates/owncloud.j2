@@ -1,0 +1,19 @@
+Alias /owncloud /usr/share/owncloud
+
+<Directory /usr/share/owncloud/>
+    Options -Indexes
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+
+    ErrorDocument 404 /core/templates/404.php
+
+    php_value upload_max_filesize 512M
+    php_value post_max_size 512M
+    php_value memory_limit 512M
+    SetEnv htaccessWorking true
+
+    RewriteEngine on
+    RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization},last]
+</Directory>
