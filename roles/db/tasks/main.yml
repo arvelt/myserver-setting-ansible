@@ -1,0 +1,9 @@
+---
+- name: make owncloud db
+  mysql_db: name={{ OWNCLOUD_DB }}
+
+- name: make owncloud user
+  mysql_user: "name={{ OWNCLOUD_USER }} password={{ OWNCLOUD_PASSWORD }} priv={{ OWNCLOUD_DB }}.*:ALL"
+
+- name: restart mysql
+  service: name=mysqld state=restarted

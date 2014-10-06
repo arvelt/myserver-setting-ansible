@@ -5,20 +5,13 @@
 #  roles:
 #    - sakura-root
 
-- name: common package and configure
+- name: server
   sudo: yes
   hosts: sakura-vps
   roles:
     - common
-
-- name: make webserver
-  sudo: yes
-  hosts: sakura-vps
-  roles:
     - web
-
-- name: deploy apps
-  sudo: yes
-  hosts: sakura-vps
-  roles:
+    - {role: geerlingguy.mysql,
+       mysql_root_password: "{{ MYSQL_ROOT_PASSWORD}}" }
+    - db
     - app
