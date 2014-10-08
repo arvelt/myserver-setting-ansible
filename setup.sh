@@ -134,8 +134,10 @@ fname='/etc/ssh/sshd_config'
 if [ ! -f ${fname}_bak ]; then cp ${fname} ${fname}_bak; fi
 sed -i "s/^#Port 22/Port ${SSHPNO}/" ${fname}
 sed -i 's/^#PermitRootLogin yes/PermitRootLogin no/' ${fname}
-sed -i 's/^#PermitEmptyPasswords/PermitEmptyPasswords no/' ${fname}
+sed -i 's/^#PermitEmptyPasswords/PermitEmptyPasswords/' ${fname}
 echo "AllowUsers ${UName}" >> ${fname}
+service sshd restart
+chkconfig sshd on
 
 # ファイアーウォール設定
 echo "*filter
@@ -162,3 +164,4 @@ echo "*filter
 
 COMMIT" > /etc/sysconfig/iptables
 service iptables restart
+chkconfig iptables on
