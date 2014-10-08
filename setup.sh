@@ -136,3 +136,29 @@ sed -i "s/^#Port 22/Port ${SSHPNO}/" ${fname}
 sed -i 's/^#PermitRootLogin yes/PermitRootLogin no/' ${fname}
 sed -i 's/^#PermitEmptyPasswords/PermitEmptyPasswords no/' ${fname}
 echo "AllowUsers ${UName}" >> ${fname}
+
+# ファイアーウォール設定
+echo "*filter
+:INPUT   ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT  ACCEPT [0:0]
+:RH-Firewall-1-INPUT - [0:0]
+
+-A INPUT -j RH-Firewall-1-INPUT
+-A FORWARD -j RH-Firewall-1-INPUT
+-A RH-Firewall-1-INPUT -i lo -j ACCEPT
+-A RH-Firewall-1-INPUT -p icmp --icmp-type any -j ACCEPT
+-A RH-Firewall-1-INPUT -p 50 -j ACCEPT
+-A RH-Firewall-1-INPUT -p 51 -j ACCEPT
+-A RH-Firewall-1-INPUT -p udp --dport 5353 -d 224.0.0.251 -j ACCEPT
+-A RH-Firewall-1-INPUT -p udp -m udp --dport 631 -j ACCEPT
+-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 631 -j ACCEPT
+-A RH-Firewall-1-INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# ssh
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport ${SSHPNO} -j ACCEPT
+
+-A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited
+
+COMMIT" > /etc/sysconfig/iptables
+service iptables restart
