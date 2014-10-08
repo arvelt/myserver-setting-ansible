@@ -133,8 +133,10 @@ sed -i 's/^# %wheel\s*ALL=(ALL)\s*ALL/%wheel ALL=(ALL) ALL/' ${fname}
 fname='/etc/ssh/sshd_config'
 if [ ! -f ${fname}_bak ]; then cp ${fname} ${fname}_bak; fi
 sed -i "s/^#Port 22/Port ${SSHPNO}/" ${fname}
-sed -i 's/^#PermitRootLogin yes/PermitRootLogin no/' ${fname}
 sed -i 's/^#PermitEmptyPasswords/PermitEmptyPasswords/' ${fname}
+sed -i 's/^#PubkeyAuthentication/PubkeyAuthentication/' ${fname}
+sed -i 's/^#RSAAuthentication/RSAAuthentication/' ${fname}
+sed -i 's/^#AuthorizedKeysFile/AuthorizedKeysFile/' ${fname}
 echo "AllowUsers ${UName}" >> ${fname}
 service sshd restart
 chkconfig sshd on

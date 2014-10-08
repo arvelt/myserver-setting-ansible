@@ -1,5 +1,13 @@
 #! /bin/bash
 
+echo -n "Connection UserName:"
+read USERNAME
+if [ ! ${USERNAME} ]; then USERNAME="nothing"; fi
+if [ ${USERNAME} == "nothing" ]; then
+  echo "Required UserName"
+  exit 1
+fi
+
 source ~/Dropbox/backup/mytodo-sinatra/config.ini
 source ~/Dropbox/backup/owncloud/config.ini
 vars="{\"TODOSINATRA_CLIENT_ID\":\"$TODOSINATRA_CLIENT_ID\",
@@ -8,4 +16,4 @@ vars="{\"TODOSINATRA_CLIENT_ID\":\"$TODOSINATRA_CLIENT_ID\",
         \"OWNCLOUD_USER\":\"$OWNCLOUD_USER\",
         \"OWNCLOUD_PASSWORD\":\"$OWNCLOUD_PASSWORD\",
         \"MYSQL_ROOT_PASSWORD\":\"$MYSQL_ROOT_PASSWORD\"}"
-ansible-playbook -i hosts  --extra-vars="${vars}" site.yml
+ansible-playbook -i hosts -u ${USERNAME} --extra-vars="${vars}" site.yml
