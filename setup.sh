@@ -167,3 +167,12 @@ echo "*filter
 COMMIT" > /etc/sysconfig/iptables
 service iptables restart
 chkconfig iptables on
+
+su - ${UName}
+mkdir .ssh
+chmod 700 .ssh
+cd .ssh
+touch authorized_keys
+chmod 600 authorized_keys
+
+echo 'Add publick key to ~/.ssh/authorized_keys'
