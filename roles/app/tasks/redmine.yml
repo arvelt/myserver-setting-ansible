@@ -27,7 +27,7 @@
   register: current_user
 
 - name: change owner redmine dir
-  file: 'path=/var/www/redmine state=directory owner={{current_user.stdout}} group={{current_user.stdout}} recurse=yes'
+  file: 'path=/var/www/redmine state=directory owner={{current_user.stdout}} group=wheel recurse=yes'
 
 - name: install redmine database.yml
   sudo: no
@@ -45,11 +45,11 @@
 
 - name: install redmine dependence
   sudo: no
-  command: bundle install chdir=/var/www/redmine
+  shell: bundle install --path vendor/bundle chdir=/var/www/redmine
 
 - name: generate secret token
   sudo: no
-  command: rake generate_secret_token chdir=/var/www/redmine
+  command: bundle exec rake generate_secret_token chdir=/var/www/redmine
 
 # When version upgrade, do the following.
 #- name: initialise db for redmine

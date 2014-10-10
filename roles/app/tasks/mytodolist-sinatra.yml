@@ -12,11 +12,11 @@
   register: current_user
 
 - name: change owner mytodo-sinatra dir
-  file: 'path=/var/www/mytodolist-sinatra state=directory owner={{current_user.stdout}} group={{current_user.stdout}} recurse=yes'
+  file: 'path=/var/www/mytodolist-sinatra state=directory owner={{current_user.stdout}} group=wheel recurse=yes'
 
 - name: install mytodo-sinatra dependence
   sudo: no
-  command: bundle install chdir=/var/www/mytodolist-sinatra
+  command: bundle install --path vendor/bundle chdir=/var/www/mytodolist-sinatra
 
 - name: chown mytodo-sinatra directory
   file: path=/var/www/mytodolist-sinatra state=directory owner=apache group=apache recurse=yes
