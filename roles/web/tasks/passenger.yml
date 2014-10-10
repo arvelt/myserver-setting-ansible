@@ -1,7 +1,7 @@
 # install passenger
 ---
 # for centOS6 must be set before sudo gem install
-- name: install developer tool for compile passenger
+- name: passenger | install developer tool
   yum: name={{ item }} state=present
   with_items:
     - gcc-c++
@@ -11,35 +11,35 @@
     - apr-devel
     - apr-util-devel
 
-- name: enable sudo gem install
+- name: passenger | enable sudo gem install
   lineinfile: "dest=/etc/sudoers
                state=present
                regexp='^Defaults    secure_path ='
                line='Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
                validate='visudo -cf %s'"
 
-- name: install passenger
+- name: passenger | install
   command: sudo gem install passenger --no-rdoc --no-ri
 
 # - name: install passenger
 #   command: gem install passenger --no-rdoc --no-ri executable=/usr/local/bin/gem
 
-- name: find passenger root
+- name: passenger | find root
   command: passenger-config --root
   register: passenger_root
 
-- name: find passenger module
+- name: passenger | find module
   stat: path={{ passenger_root.stdout }}/buildout/apache2/mod_passenger.so
   register: module
 
-- name: passenger-module should be installed
+- name: passenger | install passenger-module
   command: "passenger-install-apache2-module --auto --languages=ruby,nodejs"
   when: module.stat.exists != True
 
-- name: get ruby path
+- name: passenger | get ruby path
   command: which ruby
   register: ruby_dir
 
-- name: httpd should be configured
+- name: passenger | configure for httpd
   template: src=passenger.j2 dest=/etc/httpd/conf.d/passenger.conf
   register: passenger_conf

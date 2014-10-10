@@ -1,4 +1,4 @@
-- name: server
+- name: server setting and deploy apps
   sudo: yes
   hosts: sakura-vps
   roles:

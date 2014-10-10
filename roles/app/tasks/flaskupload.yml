@@ -1,17 +1,17 @@
 ---
-- name: install python-pip
+- name: flaskupload | install python-pip
   yum: name=python-pip state=present
 
-- name: install flask
+- name: flaskupload | install flask
   command: pip install flask
 
-- name: clone flaskupload repo
+- name: flaskupload | clone repo
   git: repo=https://github.com/arvelt/flask-fileupload-sample.git dest=/var/www/flaskupload force=yes
 
-- name: chown flaskupload directory
+- name: flaskupload | chown directory for apache
   file: path=/var/www/flaskupload state=directory owner=apache group=apache recurse=yes
 
-- name: install flaskupload to httpd
+- name: flaskupload | install flaskupload.conf to httpd
   template: src=flaskupload.j2 dest=/etc/httpd/conf.d/flaskupload.conf
   notify:
     - restart httpd

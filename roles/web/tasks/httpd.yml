@@ -1,10 +1,10 @@
 # Install httpd and Configure
 ---
-- name: install httpd
+- name: httpd | install
   yum: name=httpd state=present
   notify: restart httpd
 
-- name: insert iptables rule for httpd
+- name: httpd | insert iptables rule
   lineinfile: dest=/etc/sysconfig/iptables
               create=yes
               state=present

@@ -1,30 +1,30 @@
 ---
-- name: clone mytodo-sinatra repo
+- name: mytodolist-sinatra | clone repo
   git: repo=https://github.com/arvelt/my-todo-list-with-ruby-sinatra.git dest=/var/www/mytodolist-sinatra force=yes
   register: mytodolist_sinatra_root_dir
 
-- name: put recovery data from localhost
+- name: mytodolist-sinatra | put recovery data from localhost
   copy: src=~/Dropbox/backup/redmine/db/production.sqlite3 dest=/var/www/mytodolist-sinatra/db/production.sqlite3 owner=apache group=apache mode=0644
 
-- name: who am I
+- name: mytodolist-sinatra | who am I
   sudo: no
   command: whoami
   register: current_user
 
-- name: change owner mytodo-sinatra dir
+- name: mytodolist-sinatra | change directory owner
   file: 'path=/var/www/mytodolist-sinatra state=directory owner={{current_user.stdout}} group=wheel recurse=yes'
 
-- name: install mytodo-sinatra dependence
+- name: mytodolist-sinatra | install mytodo-sinatra dependence
   sudo: no
   command: bundle install --path vendor/bundle chdir=/var/www/mytodolist-sinatra
 
-- name: chown mytodo-sinatra directory
+- name: mytodolist-sinatra | change directory owner for apache
   file: path=/var/www/mytodolist-sinatra state=directory owner=apache group=apache recurse=yes
 
-- name: install mytodo-sinatra.conf to httpd
+- name: mytodolist-sinatra | install mytodo-sinatra.conf to httpd
   template: src=mytodo-sinatra.j2 dest=/etc/httpd/conf.d/mytodolist-sinatra.conf
 
-- name: make symbolic link to use subdirectory
+- name: mytodolist-sinatra | make symbolic link to use 
   command: ln -sf /var/www/mytodolist-sinatra/public /var/www/html/todolist-simple-sinatra
   notify:
     - restart httpd

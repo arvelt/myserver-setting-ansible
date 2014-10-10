@@ -1,6 +1,6 @@
 # install ruby from source
 ---
-- name: install developer tool
+- name: ruby | install developer
   yum: name={{ item }} state=present
   with_items:
     - gcc
@@ -9,13 +9,13 @@
     - sqlite
     - sqlite-devel
 
-- name: download ruby source
+- name: ruby | download source
   get_url: url="http://cache.ruby-lang.org/pub/ruby/2.0/{{ version }}.tar.gz" dest="./{{ version }}.tar.gz"
 
-- name: exract ruby
+- name: ruby | exract
   command: 'tar zxvf {{ version }}.tar.gz creates={{ version }}'
 
-- name: install ruby
+- name: ruby | install
   shell: 'cd {{ version }};{{ item }} creates=/usr/local/bin/ruby'
   with_items:
     - ./configure

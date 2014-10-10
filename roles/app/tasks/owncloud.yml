@@ -1,8 +1,8 @@
 ---
-- name: get owncloud
+- name: owncloud | get repo
   command: wget http://download.opensuse.org/repositories/isv:ownCloud:community/CentOS_CentOS-6/isv:ownCloud:community.repo chdir=/etc/yum.repos.d
 
-- name: install owncloud
+- name: owncloud | install
   yum: name=owncloud
   notify:
     - restart httpd
