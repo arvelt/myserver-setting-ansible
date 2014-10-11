@@ -159,10 +159,9 @@ echo "*filter
 -A RH-Firewall-1-INPUT -p tcp -m tcp --dport 631 -j ACCEPT
 -A RH-Firewall-1-INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# ssh
 -A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport ${SSHPNO} -j ACCEPT
 
-# custom
+#custom
 
 -A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited
 
