@@ -162,6 +162,8 @@ echo "*filter
 # ssh
 -A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport ${SSHPNO} -j ACCEPT
 
+# custom
+
 -A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited
 
 COMMIT" > /etc/sysconfig/iptables

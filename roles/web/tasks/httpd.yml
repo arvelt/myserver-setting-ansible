@@ -4,10 +4,17 @@
   yum: name=httpd state=present
   notify: restart httpd
 
-- name: httpd | insert iptables rule
+- name: httpd | insert iptables http rule
   lineinfile: dest=/etc/sysconfig/iptables
               create=yes
               state=present
-              insertafter="^:OUTPUT "
-              line="-A INPUT -p tcp  --dport 80 -j  ACCEPT"
+              insertafter="^:#custom"
+              line="-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT"
+
+- name: httpd | insert iptables https rule
+  lineinfile: dest=/etc/sysconfig/iptables
+              create=yes
+              state=present
+              insertafter="^:#custom"
+              line="-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT"
   notify: restart iptables
