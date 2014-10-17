@@ -1,5 +1,9 @@
 Ansible for individual server studying
 ---
+###Usage
+```
+$ sh runansible.sh
+```
 
 ## Note  
 ###Sites.  
@@ -22,6 +26,8 @@ http://docs.ansible.com/index.html
 ### Memo
 
 - hostsというファイルにホスト名とそれらを束ねるグループ名を書いておいてカレントに置き、```ansible-playbook -i hosts site.yml```とやるのが基本
+
+- ansibleでおすすめする構成というのがある。http://docs.ansible.com/playbooks_best_practices.html
 
 - デフォルトで接続しに行くユーザーは'root'。ユーザーの指定はhostsファイル、実行時の-uオプションで指定する。
 
