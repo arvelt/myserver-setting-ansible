@@ -27,7 +27,7 @@ http://docs.ansible.com/index.html
 
 - hostsというファイルにホスト名とそれらを束ねるグループ名を書いておいてカレントに置き、```ansible-playbook -i hosts site.yml```とやるのが基本
 
-- ansibleでおすすめする構成というのがある。http://docs.ansible.com/playbooks_best_practices.html
+- ansibleでおすすめす構成というのがある。http://docs.ansible.com/playbooks_best_practices.html
 
 - デフォルトで接続しに行くユーザーは'root'。ユーザーの指定はhostsファイル、実行時の-uオプションで指定する。
 
@@ -52,6 +52,7 @@ http://docs.ansible.com/index.html
 
 - bundle使うとき。sudoで実行するとエラーになるので、rootでやるとき以外ならおそらく一捻り必要。
 
+- 役に立った本。http://tdoc.info/blog/2014/08/01/ansible_book.html
 
 
 ## TODO
